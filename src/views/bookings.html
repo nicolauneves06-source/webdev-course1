@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f5ef">
+    <title>My Bookings | Lab Booking</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/bookings.js" defer></script>
+  </head>
+  <body>
+    <main class="bookings-shell">
+      <header class="bookings-header">
+        <div>
+          <p class="eyebrow">LAB BOOKING SYSTEM</p>
+          <h1>My bookings</h1>
+        </div>
+        <span class="account-mark" aria-label="Signed in">MY LAB</span>
+      </header>
+
+      <section class="bookings-content" aria-labelledby="list-heading">
+        <div class="list-heading-row">
+          <div>
+            <p class="section-kicker">YOUR SCHEDULE</p>
+            <h2 id="list-heading">Upcoming reservations</h2>
+          </div>
+          <span id="booking-count" class="booking-count" aria-live="polite"></span>
+        </div>
+
+        <p id="bookings-state" class="bookings-state" role="status" aria-live="polite" aria-busy="true">
+          Loading your bookings...
+        </p>
+        <ol id="booking-list" class="booking-list" hidden></ol>
+      </section>
+    </main>
+  </body>
+</html>

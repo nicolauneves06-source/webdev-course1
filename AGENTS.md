@@ -8,13 +8,17 @@ See `SPEC.md` for goals, non-goals and acceptance criteria.
 
 ## Commands
 <!-- How to install, run, test. Keep these exact and working. -->
-- Install: 
-- Run: 
-- Test: 
-- Coverage: 
-- MCP server: 
+- Install: `npm install`
+- Run: `npm start`
+- Test: `npm test`
+- Coverage: Not configured for Slice 1
+- MCP server: Not part of Slice 1
 
 ## Conventions
+- HTTP handlers live in `src/routes/`; business rules live in `src/services/`; SQL repositories and database setup live in `src/data/`; browser assets live in `public/`; tests live in `test/`.
+- Use kebab-case filenames and camelCase JavaScript exports. Keep route handlers transport-focused and services independent of Express and MCP.
+- Only repositories issue parameterized SQL. The app uses persistent `data/app.db` (or `DATABASE_PATH`); tests use disposable on-disk SQLite files, never `:memory:`.
+- Return readable JSON errors from APIs and redirect unauthenticated browser requests to `/login`; never expose stack traces or credentials to clients.
 <!-- Folder layout, naming, where business rules live, how errors are returned to the client. -->
 
 ## Layers
@@ -29,8 +33,9 @@ rules and knows nothing about HTTP or about MCP. Only the data layer writes SQL.
 that talks to the database directly is a second, unguarded way into your data: never add one.
 
 ## The model feature
+- The provider is named in exactly one implementation file: planned `src/services/model-client.js` (Google Gemini 2.5 Flash; later slice).
 <!-- Provider, env var, and the call site. -->
-- The provider is named in exactly one file: 
+- The provider is named in exactly one file:
 - The key comes from an environment variable and is never committed or logged.
 - Every call has a timeout and a deterministic fallback, so the app still works when the provider is down or rate-limited.
 - The model's output is re-checked against real data before anything is saved or shown.
@@ -44,6 +49,7 @@ that talks to the database directly is a second, unguarded way into your data: n
 - Adding a tool means adding a row to the table in `SPEC.md` too.
 
 ## Tests and coverage
+- Every acceptance criterion in the current slice has a test whose title contains that ID. Add tests for later-slice criteria with the corresponding implementation; do not mark planned criteria as passed.
 - Every acceptance criterion in `SPEC.md` has an id like `AC-3`, and a test whose title contains that id.
 - The coverage gate runs in CI: 100% of the service layer, 80% overall.
 - A test is evidence. Changing a test so the code passes destroys the evidence.
